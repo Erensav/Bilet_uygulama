@@ -17,15 +17,34 @@ namespace Bilet_uygulama
         {
             InitializeComponent();
         }
-        SqlConnection baglanti = new SqlConnection(@"Data Source = EREN\SQLEXPRESS; Initial Catalog = Yolcu_bilet; Integrated Security = True");
+
+        SqlConnection baglanti = new SqlConnection(@"Data Source = EREN\SQLEXPRESS;Initial Catalog = Yolcu_bilet; Integrated Security = True");
 
         void seferlistesi()
         {
-            SqlDataAdapter sefergoster = new SqlDataAdapter("Select * From sefer_bilgileri", baglanti);
+            SqlDataAdapter sefergoster = new SqlDataAdapter("SELECT sefer_no, sefer_kalkis, sefer_varis, sefer_tarih, sefer_saat, sefer_fiyat FROM sefer_bilgileri", baglanti);
             DataTable dt = new DataTable();
             sefergoster.Fill(dt);
             dataGridView1.DataSource = dt;
         }
+
+        private void Form2_Load(object sender, EventArgs e)
+        {
+            // Form yüklendiğinde seçenekleri temizleyip ekleyin
+            cmbkydlcins.Items.Clear();
+            cmbkydlcins.Items.Add("Kadın");
+            cmbkydlcins.Items.Add("Erkek");
+
+            seferlistesi(); // Diğer işlemleri gerçekleştirmek için
+        }
+
+        private void cmbkydlcins_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            
+            
+        }
+
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -41,46 +60,114 @@ namespace Bilet_uygulama
 
         private void btnkaydol_Click(object sender, EventArgs e)
         {
-            baglanti.Open();
-            SqlCommand bilgiyolcu = new SqlCommand("insert into Yolcu_bilgiler (yolcu_ad,yolcu_soyad,yolcu_tel,yolcu_tc,yolcu_cins,yolcu_mail) values (@p1,@p2,@p3,@p4,@p5,@p6)", baglanti);
-            bilgiyolcu.Parameters.AddWithValue("@p1", txtkydlad.Text);
-            bilgiyolcu.Parameters.AddWithValue("@p2", txtkydlsyad.Text);
-            bilgiyolcu.Parameters.AddWithValue("@p3", mskkydltel.Text);
-            bilgiyolcu.Parameters.AddWithValue("@p4", mskkydltc.Text);
-            bilgiyolcu.Parameters.AddWithValue("@p5", cmbkydlcins.Text);
-            bilgiyolcu.Parameters.AddWithValue("@p6", txtkydlmail.Text);
-            bilgiyolcu.ExecuteNonQuery();
-            baglanti.Close();
-            MessageBox.Show("Yolcu Bilgisi Sisteme Kaydedildi", "Basarili", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            txtkydlad.Text = "";
-            txtkydlsyad.Text = "";
-            mskkydltel.Text = "";
-            mskkydltc.Text = "";
-            cmbkydlcins.Text = "";
-            txtkydlmail.Text = "";
+            try
+            {
+                baglanti.Open();
+
+                // Kullanıcı bilgilerinin benzersiz olup olmadığını kontrol etmek için bir sorgu yazalım
+                SqlCommand kontrolSorgu = new SqlCommand("SELECT COUNT(*) FROM Yolcu_bilgiler WHERE yolcu_tc = @tc", baglanti);
+                kontrolSorgu.Parameters.AddWithValue("@tc", mskkydltc.Text);
+
+                int kayitSayisi = (int)kontrolSorgu.ExecuteScalar();
+
+                if (kayitSayisi > 0)
+                {
+                    // Aynı TC kimlik numarasına sahip bir kullanıcı zaten varsa hata mesajı göster
+                    MessageBox.Show("Bu TC Kimlik Numarasına sahip bir kullanıcı zaten kayıtlı!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    // Yeni kullanıcıyı ekleyelim
+                    SqlCommand bilgiyolcu = new SqlCommand("INSERT INTO Yolcu_bilgiler (yolcu_ad, yolcu_soyad, yolcu_tel, yolcu_tc, yolcu_cins, yolcu_mail) VALUES (@p1, @p2, @p3, @p4, @p5, @p6)", baglanti);
+                    bilgiyolcu.Parameters.AddWithValue("@p1", txtkydlad.Text);
+                    bilgiyolcu.Parameters.AddWithValue("@p2", txtkydlsyad.Text);
+                    bilgiyolcu.Parameters.AddWithValue("@p3", mskkydltel.Text);
+                    bilgiyolcu.Parameters.AddWithValue("@p4", mskkydltc.Text);
+                    bilgiyolcu.Parameters.AddWithValue("@p5", cmbkydlcins.Text);
+                    bilgiyolcu.Parameters.AddWithValue("@p6", txtkydlmail.Text);
+
+                    bilgiyolcu.ExecuteNonQuery();
+
+                    MessageBox.Show("Yolcu Bilgisi Sisteme Kaydedildi", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hata Oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                baglanti.Close();
+                // Diğer temizleme işlemleri burada yapılabilir.
+                txtkydlad.Text = "";
+                txtkydlsyad.Text = "";
+                mskkydltel.Text = "";
+                mskkydltc.Text = "";
+                cmbkydlcins.Text = "";
+                txtkydlmail.Text = "";
+            }
+
         }
 
         private void button17_Click(object sender, EventArgs e)
         {
-            baglanti.Open();                      
+            try
+            {
+                baglanti.Open();
 
-            SqlCommand rezerve = new SqlCommand("insert into sefer_detay (sefer_no,yolcu_tc,koltuk) values (@1,@2,@3)", baglanti);
-            rezerve.Parameters.AddWithValue("@1", txtrezno.Text);
-            rezerve.Parameters.AddWithValue("@2", mskreztc.Text);
-            rezerve.Parameters.AddWithValue("@3", txtrezkoltuk.Text);
-            rezerve.ExecuteNonQuery();
-            baglanti.Close();
-            MessageBox.Show("Rezervasyonunuz Basari ile Sisteme Kaydedildi", "Basarili", MessageBoxButtons.OK, MessageBoxIcon.Information);         
-            txtrezno.Text = "";
-            mskreztc.Text = "";
-            txtrezkoltuk.Text = "";
+                // TC kimlik numarasının formata uygunluğunu kontrol et
+                if (!IsValidTc(mskreztc.Text))
+                {
+                    MessageBox.Show("Geçerli bir TC Kimlik Numarası giriniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // TC kimlik numarasının sistemde kayıtlı olup olmadığını kontrol et
+                SqlCommand kontrolSorgu = new SqlCommand("SELECT COUNT(*) FROM Yolcu_bilgiler WHERE yolcu_tc = @tc", baglanti);
+                kontrolSorgu.Parameters.AddWithValue("@tc", mskreztc.Text);
+
+                int kayitSayisi = (int)kontrolSorgu.ExecuteScalar();
+
+                if (kayitSayisi > 0)
+                {
+                    // TC kimlik numarasına sahip yolcu varsa rezervasyonu yap
+                    SqlCommand rezerve = new SqlCommand("insert into sefer_detay (sefer_no,yolcu_tc,koltuk) values (@1,@2,@3)", baglanti);
+                    rezerve.Parameters.AddWithValue("@1", txtrezno.Text);
+                    rezerve.Parameters.AddWithValue("@2", mskreztc.Text);
+                    rezerve.Parameters.AddWithValue("@3", txtrezkoltuk.Text);
+                    rezerve.ExecuteNonQuery();
+
+                    MessageBox.Show("Rezervasyonunuz Başarı ile Sisteme Kaydedildi", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Bu TC Kimlik Numarasına sahip bir yolcu kayıtlı değil. Lütfen kayıt yapınız.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hata Oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                baglanti.Close();
+                txtrezno.Text = "";
+                mskreztc.Text = "";
+                txtrezkoltuk.Text = "";
+            }
         }
 
-
-        private void Form2_Load(object sender, EventArgs e)
+        // TC Kimlik Numarası formatının geçerli olup olmadığını kontrol etmek için bir metod
+        private bool IsValidTc(string tc)
         {
-            seferlistesi();
+            // TC kimlik numarasının geçerli olup olmadığını kontrol etmek için gerekli kontrolleri burada gerçekleştirin
+            // Örnek olarak, TC kimlik numarasının uzunluğunu kontrol edebilirsiniz
+            return tc.Length == 11;
         }
+
+
+
+
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             int secilen = dataGridView1.SelectedCells[0].RowIndex;
@@ -99,9 +186,9 @@ namespace Bilet_uygulama
             else
             {
                 button1.BackColor = Color.Red;
-            }
+            }        
 
-            
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -117,7 +204,10 @@ namespace Bilet_uygulama
             {
                 button2.BackColor = Color.Red;
             }
+
             
+            
+
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -194,6 +284,8 @@ namespace Bilet_uygulama
                 button7.BackColor = Color.Red;
             }
         }
+
+        
 
         private void button8_Click(object sender, EventArgs e)
         {
@@ -313,6 +405,16 @@ namespace Bilet_uygulama
             {
                 button15.BackColor = Color.Red;
             }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timer1_Tick_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
