@@ -16,8 +16,53 @@ namespace Bilet_uygulama
         public Form2()
         {
             InitializeComponent();
-        }
 
+            // Timer'ı başlat
+            Timer timer = new Timer();
+            timer.Interval = 60000; // Her bir dakikada bir (1 dakika = 60000 milisaniye)
+            timer.Tick += new EventHandler(timer_Tick);
+            timer.Start();
+
+            // Sefer listesini yükle
+            seferlistesi();
+        }
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            // Güncel saat ve tarih bilgisini al
+            DateTime currentDateTime = DateTime.Now;
+
+            // Bağlantı kapalıysa aç
+            if (baglanti.State == ConnectionState.Closed)
+                baglanti.Open();
+
+            // Sefer bilgilerini al
+            SqlDataAdapter seferAdapter = new SqlDataAdapter("SELECT sefer_no, sefer_kalkis, sefer_varis, sefer_tarih, sefer_saat, sefer_fiyat FROM sefer_bilgileri", baglanti);
+            DataTable seferTable = new DataTable();
+            seferAdapter.Fill(seferTable);
+
+            // Her bir seferi kontrol et
+            foreach (DataRow row in seferTable.Rows)
+            {
+                DateTime seferDateTime = Convert.ToDateTime(row["sefer_tarih"].ToString() + " " + row["sefer_saat"].ToString());
+
+                // Eğer seferin zamanı geçmişse, seferi sil
+                if (seferDateTime <= currentDateTime)
+                {
+                    int seferNo = Convert.ToInt32(row["sefer_no"].ToString());
+
+                    // Seferi silme işlemi burada yapılır, örnek olarak
+                    SqlCommand deleteCommand = new SqlCommand("DELETE FROM sefer_bilgileri WHERE sefer_no = @seferNo", baglanti);
+                    deleteCommand.Parameters.AddWithValue("@seferNo", seferNo);
+                    deleteCommand.ExecuteNonQuery();
+                }
+            }
+
+            // Bağlantıyı kapat
+            baglanti.Close();
+
+            // Sefer listesini güncelle
+            seferlistesi();
+        }
         SqlConnection baglanti = new SqlConnection(@"Data Source = EREN\SQLEXPRESS;Initial Catalog = Yolcu_bilet; Integrated Security = True");
 
         void seferlistesi()
@@ -52,16 +97,25 @@ namespace Bilet_uygulama
             txtrezkoltuk.Text = dataGridView1.Rows[secilen].Cells[0].Value.ToString();
         }
 
-        
 
-      
 
-        
+
+
+
 
         private void btnkaydol_Click(object sender, EventArgs e)
         {
             try
             {
+                // Gerekli alanların dolu olup olmadığını kontrol et
+                if (string.IsNullOrEmpty(txtkydlad.Text) || string.IsNullOrEmpty(txtkydlsyad.Text) ||
+                    string.IsNullOrEmpty(mskkydltel.Text) || string.IsNullOrEmpty(mskkydltc.Text) ||
+                    string.IsNullOrEmpty(cmbkydlcins.Text) || string.IsNullOrEmpty(txtkydlmail.Text))
+                {
+                    MessageBox.Show("Lütfen tüm alanları doldurunuz!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return; // Eğer alanlar eksikse kayıt işlemine devam etme
+                }
+
                 baglanti.Open();
 
                 // Kullanıcı bilgilerinin benzersiz olup olmadığını kontrol etmek için bir sorgu yazalım
@@ -106,7 +160,6 @@ namespace Bilet_uygulama
                 cmbkydlcins.Text = "";
                 txtkydlmail.Text = "";
             }
-
         }
 
         private void button17_Click(object sender, EventArgs e)
