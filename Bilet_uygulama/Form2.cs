@@ -62,6 +62,7 @@ namespace Bilet_uygulama
 
             // Sefer listesini güncelle
             seferlistesi();
+            koltukRenklendir();
         }
         SqlConnection baglanti = new SqlConnection(@"Data Source = EREN\SQLEXPRESS;Initial Catalog = Yolcu_bilet; Integrated Security = True");
 
@@ -250,6 +251,44 @@ namespace Bilet_uygulama
             int secilen = dataGridView1.SelectedCells[0].RowIndex;
             txtrezno.Text = dataGridView1.Rows[secilen].Cells[0].Value.ToString();
         }
+        private void koltukRenklendir()
+        {
+            // Bağlantı açık değilse aç
+            if (baglanti.State == ConnectionState.Closed)
+                baglanti.Open();
+
+            // Tüm koltuk butonlarını al
+            Button[] koltukButtons = { button1, button2, button3, button4, button5, button6, button7, button8, button9, button10, button11, button12, button13, button14, button15 };
+
+            foreach (Button button in koltukButtons)
+            {
+                // Koltuk numarasını al
+                string koltukNo = button.Text;
+
+                // Sefer ve koltuk durumunu kontrol et
+                SqlCommand durumSorgu = new SqlCommand("SELECT durum FROM koltuk_durumu WHERE sefer_no = @seferNo AND koltuk_no = @koltukNo", baglanti);
+                durumSorgu.Parameters.AddWithValue("@seferNo", txtrezno.Text);
+                durumSorgu.Parameters.AddWithValue("@koltukNo", koltukNo);
+
+                int durum = Convert.ToInt32(durumSorgu.ExecuteScalar());
+
+                // Duruma göre renklendirme yap
+                if (durum == 1)
+                {
+                    // Dolu koltuk
+                    button.BackColor = Color.Blue;
+                }
+                else
+                {
+                    // Boş koltuk
+                    button.BackColor = Color.Silver;
+                }
+            }
+
+            // Bağlantıyı kapat
+            baglanti.Close();
+        }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -264,7 +303,7 @@ namespace Bilet_uygulama
             {
                 button1.BackColor = Color.Red;
             }
-
+            koltukRenklendir();
 
         }
 
@@ -281,7 +320,7 @@ namespace Bilet_uygulama
             {
                 button2.BackColor = Color.Red;
             }
-
+            koltukRenklendir();
 
 
 
@@ -300,6 +339,7 @@ namespace Bilet_uygulama
             {
                 button3.BackColor = Color.Red;
             }
+            koltukRenklendir();
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -315,6 +355,7 @@ namespace Bilet_uygulama
             {
                 button4.BackColor = Color.Red;
             }
+            koltukRenklendir();
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -330,6 +371,7 @@ namespace Bilet_uygulama
             {
                 button5.BackColor = Color.Red;
             }
+            koltukRenklendir();
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -345,6 +387,7 @@ namespace Bilet_uygulama
             {
                 button6.BackColor = Color.Red;
             }
+            koltukRenklendir();
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -360,6 +403,7 @@ namespace Bilet_uygulama
             {
                 button7.BackColor = Color.Red;
             }
+            koltukRenklendir();
         }
 
 
@@ -377,6 +421,7 @@ namespace Bilet_uygulama
             {
                 button8.BackColor = Color.Red;
             }
+            koltukRenklendir();
         }
 
         private void button9_Click(object sender, EventArgs e)
@@ -392,6 +437,7 @@ namespace Bilet_uygulama
             {
                 button9.BackColor = Color.Red;
             }
+            koltukRenklendir();
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -407,6 +453,7 @@ namespace Bilet_uygulama
             {
                 button10.BackColor = Color.Red;
             }
+            koltukRenklendir();
         }
 
         private void button11_Click(object sender, EventArgs e)
@@ -422,6 +469,7 @@ namespace Bilet_uygulama
             {
                 button11.BackColor = Color.Red;
             }
+            koltukRenklendir();
         }
 
         private void button12_Click(object sender, EventArgs e)
@@ -437,6 +485,7 @@ namespace Bilet_uygulama
             {
                 button12.BackColor = Color.Red;
             }
+            koltukRenklendir();
         }
 
         private void button13_Click(object sender, EventArgs e)
@@ -452,6 +501,7 @@ namespace Bilet_uygulama
             {
                 button13.BackColor = Color.Red;
             }
+            koltukRenklendir();
         }
 
         private void button14_Click(object sender, EventArgs e)
@@ -467,6 +517,7 @@ namespace Bilet_uygulama
             {
                 button14.BackColor = Color.Red;
             }
+            koltukRenklendir();
         }
 
         private void button15_Click(object sender, EventArgs e)
@@ -482,6 +533,7 @@ namespace Bilet_uygulama
             {
                 button15.BackColor = Color.Red;
             }
+            koltukRenklendir();
         }
 
         private void timer1_Tick(object sender, EventArgs e)

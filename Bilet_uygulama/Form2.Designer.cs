@@ -72,6 +72,8 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.button18 = new System.Windows.Forms.Button();
+            this.button19 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -81,6 +83,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button19);
+            this.groupBox1.Controls.Add(this.button18);
             this.groupBox1.Controls.Add(this.button16);
             this.groupBox1.Controls.Add(this.button13);
             this.groupBox1.Controls.Add(this.button14);
@@ -538,6 +542,30 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick_1);
             // 
+            // button18
+            // 
+            this.button18.BackColor = System.Drawing.Color.Blue;
+            this.button18.Enabled = false;
+            this.button18.Location = new System.Drawing.Point(23, 589);
+            this.button18.Margin = new System.Windows.Forms.Padding(4);
+            this.button18.Name = "button18";
+            this.button18.Size = new System.Drawing.Size(81, 44);
+            this.button18.TabIndex = 16;
+            this.button18.Text = "Dolu";
+            this.button18.UseVisualStyleBackColor = false;
+            // 
+            // button19
+            // 
+            this.button19.BackColor = System.Drawing.Color.Silver;
+            this.button19.Enabled = false;
+            this.button19.Location = new System.Drawing.Point(112, 589);
+            this.button19.Margin = new System.Windows.Forms.Padding(4);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(81, 44);
+            this.button19.TabIndex = 17;
+            this.button19.Text = "Bos";
+            this.button19.UseVisualStyleBackColor = false;
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 21F);
@@ -608,5 +636,7 @@
         private System.Windows.Forms.MaskedTextBox mskreztc;
         private System.Windows.Forms.TextBox txtrezno;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button button19;
+        private System.Windows.Forms.Button button18;
     }
 }
