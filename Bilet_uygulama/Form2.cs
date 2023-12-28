@@ -85,9 +85,9 @@ namespace Bilet_uygulama
 
         private void cmbkydlcins_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
-            
-            
+
+
+
         }
 
 
@@ -184,13 +184,36 @@ namespace Bilet_uygulama
                 if (kayitSayisi > 0)
                 {
                     // TC kimlik numarasına sahip yolcu varsa rezervasyonu yap
-                    SqlCommand rezerve = new SqlCommand("insert into sefer_detay (sefer_no,yolcu_tc,koltuk) values (@1,@2,@3)", baglanti);
-                    rezerve.Parameters.AddWithValue("@1", txtrezno.Text);
-                    rezerve.Parameters.AddWithValue("@2", mskreztc.Text);
-                    rezerve.Parameters.AddWithValue("@3", txtrezkoltuk.Text);
-                    rezerve.ExecuteNonQuery();
 
-                    MessageBox.Show("Rezervasyonunuz Başarı ile Sisteme Kaydedildi", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // İlgili sefer ve koltuk için rezervasyon yapılıp yapılmadığını kontrol et
+                    SqlCommand koltukKontrolSorgu = new SqlCommand("SELECT COUNT(*) FROM koltuk_durumu WHERE sefer_no = @seferNo AND koltuk_no = @koltukNo AND durum = 1", baglanti);
+                    koltukKontrolSorgu.Parameters.AddWithValue("@seferNo", txtrezno.Text);
+                    koltukKontrolSorgu.Parameters.AddWithValue("@koltukNo", txtrezkoltuk.Text);
+
+                    int rezervasyonSayisi = (int)koltukKontrolSorgu.ExecuteScalar();
+
+                    if (rezervasyonSayisi > 0)
+                    {
+                        MessageBox.Show($"Seçtiğiniz koltuk zaten dolu. Lütfen başka bir koltuk seçiniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        // Koltuk dolu değilse rezervasyonu yap
+
+                        SqlCommand rezerve = new SqlCommand("INSERT INTO sefer_detay (sefer_no, yolcu_tc, koltuk) VALUES (@1, @2, @3)", baglanti);
+                        rezerve.Parameters.AddWithValue("@1", txtrezno.Text);
+                        rezerve.Parameters.AddWithValue("@2", mskreztc.Text);
+                        rezerve.Parameters.AddWithValue("@3", txtrezkoltuk.Text);
+                        rezerve.ExecuteNonQuery();
+
+                        SqlCommand koltuk_durum = new SqlCommand("INSERT INTO koltuk_durumu (sefer_no, koltuk_no, durum) VALUES (@1, @2, @3)", baglanti);
+                        koltuk_durum.Parameters.AddWithValue("@1", txtrezno.Text);
+                        koltuk_durum.Parameters.AddWithValue("@2", txtrezkoltuk.Text);
+                        koltuk_durum.Parameters.AddWithValue("@3", 1);
+                        koltuk_durum.ExecuteNonQuery();
+
+                        MessageBox.Show("Rezervasyonunuz Başarı ile Sisteme Kaydedildi", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
                 else
                 {
@@ -209,6 +232,7 @@ namespace Bilet_uygulama
                 txtrezkoltuk.Text = "";
             }
         }
+
 
         // TC Kimlik Numarası formatının geçerli olup olmadığını kontrol etmek için bir metod
         private bool IsValidTc(string tc)
@@ -239,7 +263,7 @@ namespace Bilet_uygulama
             else
             {
                 button1.BackColor = Color.Red;
-            }        
+            }
 
 
         }
@@ -258,8 +282,8 @@ namespace Bilet_uygulama
                 button2.BackColor = Color.Red;
             }
 
-            
-            
+
+
 
         }
 
@@ -338,7 +362,7 @@ namespace Bilet_uygulama
             }
         }
 
-        
+
 
         private void button8_Click(object sender, EventArgs e)
         {
