@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button19 = new System.Windows.Forms.Button();
+            this.button18 = new System.Windows.Forms.Button();
             this.button16 = new System.Windows.Forms.Button();
             this.button13 = new System.Windows.Forms.Button();
             this.button14 = new System.Windows.Forms.Button();
@@ -72,8 +74,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.button18 = new System.Windows.Forms.Button();
-            this.button19 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -109,6 +109,30 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Koltuk Secimi";
+            // 
+            // button19
+            // 
+            this.button19.BackColor = System.Drawing.Color.Silver;
+            this.button19.Enabled = false;
+            this.button19.Location = new System.Drawing.Point(112, 589);
+            this.button19.Margin = new System.Windows.Forms.Padding(4);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(81, 44);
+            this.button19.TabIndex = 17;
+            this.button19.Text = "Bos";
+            this.button19.UseVisualStyleBackColor = false;
+            // 
+            // button18
+            // 
+            this.button18.BackColor = System.Drawing.Color.Blue;
+            this.button18.Enabled = false;
+            this.button18.Location = new System.Drawing.Point(23, 589);
+            this.button18.Margin = new System.Windows.Forms.Padding(4);
+            this.button18.Name = "button18";
+            this.button18.Size = new System.Drawing.Size(81, 44);
+            this.button18.TabIndex = 16;
+            this.button18.Text = "Dolu";
+            this.button18.UseVisualStyleBackColor = false;
             // 
             // button16
             // 
@@ -439,7 +463,7 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.dataGridView1);
-            this.groupBox3.Location = new System.Drawing.Point(428, 536);
+            this.groupBox3.Location = new System.Drawing.Point(428, 515);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(715, 202);
             this.groupBox3.TabIndex = 2;
@@ -542,30 +566,6 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick_1);
             // 
-            // button18
-            // 
-            this.button18.BackColor = System.Drawing.Color.Blue;
-            this.button18.Enabled = false;
-            this.button18.Location = new System.Drawing.Point(23, 589);
-            this.button18.Margin = new System.Windows.Forms.Padding(4);
-            this.button18.Name = "button18";
-            this.button18.Size = new System.Drawing.Size(81, 44);
-            this.button18.TabIndex = 16;
-            this.button18.Text = "Dolu";
-            this.button18.UseVisualStyleBackColor = false;
-            // 
-            // button19
-            // 
-            this.button19.BackColor = System.Drawing.Color.Silver;
-            this.button19.Enabled = false;
-            this.button19.Location = new System.Drawing.Point(112, 589);
-            this.button19.Margin = new System.Windows.Forms.Padding(4);
-            this.button19.Name = "button19";
-            this.button19.Size = new System.Drawing.Size(81, 44);
-            this.button19.TabIndex = 17;
-            this.button19.Text = "Bos";
-            this.button19.UseVisualStyleBackColor = false;
-            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 21F);
@@ -579,7 +579,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form2";
-            this.Text = "Form2";
+            this.Text = "Bilet Satis";
             this.Load += new System.EventHandler(this.Form2_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);

@@ -24,5 +24,12 @@ namespace Bilet_uygulama
             this.Hide();
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Form3 yeni = new Form3();
+            yeni.Show();
+            this.Hide();
+        }
     }
 }
