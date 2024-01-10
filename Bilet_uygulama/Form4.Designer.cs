@@ -30,34 +30,36 @@
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txtsfrno = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.mskkaptan = new System.Windows.Forms.MaskedTextBox();
+            this.msksaat = new System.Windows.Forms.MaskedTextBox();
+            this.msktarih = new System.Windows.Forms.MaskedTextBox();
+            this.txtfyt = new System.Windows.Forms.TextBox();
+            this.txtvrs = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.txtkls = new System.Windows.Forms.TextBox();
-            this.txtvrs = new System.Windows.Forms.TextBox();
-            this.txtfyt = new System.Windows.Forms.TextBox();
-            this.msktarih = new System.Windows.Forms.MaskedTextBox();
-            this.msksaat = new System.Windows.Forms.MaskedTextBox();
-            this.mskkaptan = new System.Windows.Forms.MaskedTextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.mskkptntel = new System.Windows.Forms.MaskedTextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.txtkptnad = new System.Windows.Forms.TextBox();
             this.txtkptnno = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.mskkptntel = new System.Windows.Forms.MaskedTextBox();
-            this.button2 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.label10 = new System.Windows.Forms.Label();
-            this.txtsfrno = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.label11 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -84,127 +86,31 @@
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.txtkls);
             this.groupBox1.Location = new System.Drawing.Point(18, 16);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(476, 494);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
-            // button1
+            // label10
             // 
-            this.button1.Location = new System.Drawing.Point(87, 429);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(292, 65);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Sefer Olustur";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(18, 26);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(98, 21);
+            this.label10.TabIndex = 14;
+            this.label10.Text = "Sefer No:";
             // 
-            // txtkls
+            // txtsfrno
             // 
-            this.txtkls.Location = new System.Drawing.Point(210, 67);
-            this.txtkls.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.txtkls.Name = "txtkls";
-            this.txtkls.Size = new System.Drawing.Size(229, 29);
-            this.txtkls.TabIndex = 1;
-            // 
-            // txtvrs
-            // 
-            this.txtvrs.Location = new System.Drawing.Point(210, 122);
-            this.txtvrs.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.txtvrs.Name = "txtvrs";
-            this.txtvrs.Size = new System.Drawing.Size(229, 29);
-            this.txtvrs.TabIndex = 2;
-            // 
-            // txtfyt
-            // 
-            this.txtfyt.Location = new System.Drawing.Point(210, 370);
-            this.txtfyt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.txtfyt.Name = "txtfyt";
-            this.txtfyt.Size = new System.Drawing.Size(229, 29);
-            this.txtfyt.TabIndex = 3;
-            // 
-            // msktarih
-            // 
-            this.msktarih.Location = new System.Drawing.Point(210, 183);
-            this.msktarih.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.msktarih.Mask = "00/00/0000";
-            this.msktarih.Name = "msktarih";
-            this.msktarih.Size = new System.Drawing.Size(229, 29);
-            this.msktarih.TabIndex = 4;
-            this.msktarih.ValidatingType = typeof(System.DateTime);
-            // 
-            // msksaat
-            // 
-            this.msksaat.Location = new System.Drawing.Point(210, 243);
-            this.msksaat.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.msksaat.Mask = "00:00";
-            this.msksaat.Name = "msksaat";
-            this.msksaat.Size = new System.Drawing.Size(229, 29);
-            this.msksaat.TabIndex = 5;
-            this.msksaat.ValidatingType = typeof(System.DateTime);
-            // 
-            // mskkaptan
-            // 
-            this.mskkaptan.Location = new System.Drawing.Point(210, 307);
-            this.mskkaptan.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.mskkaptan.Mask = "0000";
-            this.mskkaptan.Name = "mskkaptan";
-            this.mskkaptan.Size = new System.Drawing.Size(229, 29);
-            this.mskkaptan.TabIndex = 6;
-            this.mskkaptan.ValidatingType = typeof(int);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(42, 75);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(74, 21);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Kalkis:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(42, 130);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 21);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "Varis:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(42, 190);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(67, 21);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Tarih:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(42, 251);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(57, 21);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "Saat:";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(42, 315);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(83, 21);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "Kaptan:";
+            this.txtsfrno.Enabled = false;
+            this.txtsfrno.Location = new System.Drawing.Point(210, 16);
+            this.txtsfrno.Margin = new System.Windows.Forms.Padding(4);
+            this.txtsfrno.Name = "txtsfrno";
+            this.txtsfrno.Size = new System.Drawing.Size(229, 29);
+            this.txtsfrno.TabIndex = 13;
             // 
             // label6
             // 
@@ -216,8 +122,124 @@
             this.label6.TabIndex = 12;
             this.label6.Text = "Fiyat:";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(42, 315);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(83, 21);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Kaptan:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(42, 251);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(57, 21);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "Saat:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(42, 190);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(67, 21);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Tarih:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(42, 130);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(65, 21);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Varis:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(42, 75);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(74, 21);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Kalkis:";
+            // 
+            // mskkaptan
+            // 
+            this.mskkaptan.Location = new System.Drawing.Point(210, 307);
+            this.mskkaptan.Margin = new System.Windows.Forms.Padding(4);
+            this.mskkaptan.Mask = "0000";
+            this.mskkaptan.Name = "mskkaptan";
+            this.mskkaptan.Size = new System.Drawing.Size(229, 29);
+            this.mskkaptan.TabIndex = 6;
+            this.mskkaptan.ValidatingType = typeof(int);
+            // 
+            // msksaat
+            // 
+            this.msksaat.Location = new System.Drawing.Point(210, 243);
+            this.msksaat.Margin = new System.Windows.Forms.Padding(4);
+            this.msksaat.Mask = "00:00";
+            this.msksaat.Name = "msksaat";
+            this.msksaat.Size = new System.Drawing.Size(229, 29);
+            this.msksaat.TabIndex = 5;
+            this.msksaat.ValidatingType = typeof(System.DateTime);
+            // 
+            // msktarih
+            // 
+            this.msktarih.Location = new System.Drawing.Point(210, 183);
+            this.msktarih.Margin = new System.Windows.Forms.Padding(4);
+            this.msktarih.Mask = "00/00/0000";
+            this.msktarih.Name = "msktarih";
+            this.msktarih.Size = new System.Drawing.Size(229, 29);
+            this.msktarih.TabIndex = 4;
+            this.msktarih.ValidatingType = typeof(System.DateTime);
+            // 
+            // txtfyt
+            // 
+            this.txtfyt.Location = new System.Drawing.Point(210, 370);
+            this.txtfyt.Margin = new System.Windows.Forms.Padding(4);
+            this.txtfyt.Name = "txtfyt";
+            this.txtfyt.Size = new System.Drawing.Size(229, 29);
+            this.txtfyt.TabIndex = 3;
+            // 
+            // txtvrs
+            // 
+            this.txtvrs.Location = new System.Drawing.Point(210, 122);
+            this.txtvrs.Margin = new System.Windows.Forms.Padding(4);
+            this.txtvrs.Name = "txtvrs";
+            this.txtvrs.Size = new System.Drawing.Size(229, 29);
+            this.txtvrs.TabIndex = 2;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(87, 429);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(292, 65);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Sefer Olustur";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // txtkls
+            // 
+            this.txtkls.Location = new System.Drawing.Point(210, 67);
+            this.txtkls.Margin = new System.Windows.Forms.Padding(4);
+            this.txtkls.Name = "txtkls";
+            this.txtkls.Size = new System.Drawing.Size(229, 29);
+            this.txtkls.TabIndex = 1;
+            // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.button3);
             this.groupBox2.Controls.Add(this.button2);
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.mskkptntel);
@@ -230,6 +252,47 @@
             this.groupBox2.Size = new System.Drawing.Size(496, 478);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(102, 318);
+            this.button3.Margin = new System.Windows.Forms.Padding(4);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(292, 65);
+            this.button3.TabIndex = 16;
+            this.button3.Text = "Kaptan Sil";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click_1);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(102, 227);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(292, 65);
+            this.button2.TabIndex = 15;
+            this.button2.Text = "Kaptan Ata";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(34, 148);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(89, 21);
+            this.label9.TabIndex = 14;
+            this.label9.Text = "Telefon:";
+            // 
+            // mskkptntel
+            // 
+            this.mskkptntel.Location = new System.Drawing.Point(202, 141);
+            this.mskkptntel.Margin = new System.Windows.Forms.Padding(4);
+            this.mskkptntel.Mask = "(999) 000-0000";
+            this.mskkptntel.Name = "mskkptntel";
+            this.mskkptntel.Size = new System.Drawing.Size(229, 29);
+            this.mskkptntel.TabIndex = 13;
             // 
             // label7
             // 
@@ -267,36 +330,6 @@
             this.txtkptnno.Size = new System.Drawing.Size(229, 29);
             this.txtkptnno.TabIndex = 9;
             // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(34, 148);
-            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(89, 21);
-            this.label9.TabIndex = 14;
-            this.label9.Text = "Telefon:";
-            // 
-            // mskkptntel
-            // 
-            this.mskkptntel.Location = new System.Drawing.Point(202, 141);
-            this.mskkptntel.Margin = new System.Windows.Forms.Padding(4);
-            this.mskkptntel.Mask = "(999) 000-0000";
-            this.mskkptntel.Name = "mskkptntel";
-            this.mskkptntel.Size = new System.Drawing.Size(229, 29);
-            this.mskkptntel.TabIndex = 13;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(102, 227);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(292, 65);
-            this.button2.TabIndex = 15;
-            this.button2.Text = "Kaptan Ata";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.dataGridView1);
@@ -317,25 +350,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(794, 211);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(18, 26);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(98, 21);
-            this.label10.TabIndex = 14;
-            this.label10.Text = "Sefer No:";
-            // 
-            // txtsfrno
-            // 
-            this.txtsfrno.Enabled = false;
-            this.txtsfrno.Location = new System.Drawing.Point(210, 16);
-            this.txtsfrno.Margin = new System.Windows.Forms.Padding(4);
-            this.txtsfrno.Name = "txtsfrno";
-            this.txtsfrno.Size = new System.Drawing.Size(229, 29);
-            this.txtsfrno.TabIndex = 13;
             // 
             // groupBox4
             // 
@@ -362,17 +376,28 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(418, 394);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(781, 21);
+            this.label11.TabIndex = 12;
+            this.label11.Text = "Rezervayan iptali butonu ve pnr kodu il e rezervasyina bakma butonu yapilacak ";
+            // 
             // Form4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1688, 886);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("Lucida Fax", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form4";
             this.Text = "Form4";
             this.Load += new System.EventHandler(this.Form4_Load);
@@ -385,6 +410,7 @@
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -419,5 +445,7 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label label11;
     }
 }

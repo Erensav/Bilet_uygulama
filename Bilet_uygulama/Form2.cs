@@ -87,8 +87,6 @@ namespace Bilet_uygulama
         private void cmbkydlcins_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-
-
         }
 
 
