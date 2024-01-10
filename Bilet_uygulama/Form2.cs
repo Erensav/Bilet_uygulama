@@ -161,6 +161,14 @@ namespace Bilet_uygulama
             }
         }
 
+        private string GeneratePNRCode()
+        {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, 5).Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+
         private void button17_Click(object sender, EventArgs e)
         {
             try
@@ -184,7 +192,10 @@ namespace Bilet_uygulama
                 {
                     // TC kimlik numarasına sahip yolcu varsa rezervasyonu yap
 
-                    // İlgili sefer ve koltuk için rezervasyon yapılıp yapılmadığını kontrol et
+                    // PNR kodunu oluştur
+                    string pnrKodu = GeneratePNRCode();
+
+                    // İlgili sefer ve koltuk için rezervasyon yapıldığını kontrol et
                     SqlCommand koltukKontrolSorgu = new SqlCommand("SELECT COUNT(*) FROM koltuk_durumu WHERE sefer_no = @seferNo AND koltuk_no = @koltukNo AND durum = 1", baglanti);
                     koltukKontrolSorgu.Parameters.AddWithValue("@seferNo", txtrezno.Text);
                     koltukKontrolSorgu.Parameters.AddWithValue("@koltukNo", txtrezkoltuk.Text);
@@ -211,7 +222,13 @@ namespace Bilet_uygulama
                         koltuk_durum.Parameters.AddWithValue("@3", 1);
                         koltuk_durum.ExecuteNonQuery();
 
-                        MessageBox.Show("Rezervasyonunuz Başarı ile Sisteme Kaydedildi", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        // PNR kodunu yolcu bilgiler tablosuna kaydet
+                        SqlCommand pnrKaydet = new SqlCommand("UPDATE Yolcu_bilgiler SET yolcu_pnr = @pnr WHERE yolcu_tc = @tc", baglanti);
+                        pnrKaydet.Parameters.AddWithValue("@pnr", pnrKodu);
+                        pnrKaydet.Parameters.AddWithValue("@tc", mskreztc.Text);
+                        pnrKaydet.ExecuteNonQuery();
+
+                        MessageBox.Show($"Rezervasyonunuz Başarı ile Sisteme Kaydedildi. PNR Kodu: {pnrKodu}", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 else
@@ -231,6 +248,7 @@ namespace Bilet_uygulama
                 txtrezkoltuk.Text = "";
             }
         }
+
 
 
         // TC Kimlik Numarası formatının geçerli olup olmadığını kontrol etmek için bir metod
