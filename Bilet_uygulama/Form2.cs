@@ -228,7 +228,7 @@ namespace Bilet_uygulama
                         pnrKaydet.Parameters.AddWithValue("@tc", mskreztc.Text);
                         pnrKaydet.ExecuteNonQuery();
 
-                        MessageBox.Show($"Rezervasyonunuz Başarı ile Sisteme Kaydedildi. PNR Kodu: {pnrKodu}", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"Rezervasyonunuz Başarı ile Sisteme Kaydedildi.\n PNR Kodu: {pnrKodu}", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 else
