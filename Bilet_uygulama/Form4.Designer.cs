@@ -59,7 +59,6 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.label11 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -376,22 +375,11 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(418, 394);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(781, 21);
-            this.label11.TabIndex = 12;
-            this.label11.Text = "Rezervayan iptali butonu ve pnr kodu il e rezervasyina bakma butonu yapilacak ";
-            // 
             // Form4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1688, 886);
-            this.Controls.Add(this.label11);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -399,7 +387,7 @@
             this.Font = new System.Drawing.Font("Lucida Fax", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form4";
-            this.Text = "Form4";
+            this.Text = "Admin Sayfasi";
             this.Load += new System.EventHandler(this.Form4_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -410,7 +398,6 @@
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -446,6 +433,5 @@
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Label label11;
     }
 }

@@ -75,7 +75,7 @@
             this.Controls.Add(this.button1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Yolcu Bilet Uygulamasi";
             this.ResumeLayout(false);
 
         }
