@@ -94,32 +94,32 @@ namespace Bilet_uygulama
 
         private void button2_Click(object sender, EventArgs e)
         {
-            // Girişlerin boş olup olmadığını kontrol et
+            
             if (string.IsNullOrWhiteSpace(txtkptnad.Text) || string.IsNullOrWhiteSpace(mskkptntel.Text) || string.IsNullOrWhiteSpace(txtkptnno.Text))
             {
                 MessageBox.Show("Lütfen tüm alanları doldurun.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return; // Boşsa işlemi sonlandır
+                return; 
             }
 
-            // Kaptan numarasının 4 haneli olup olmadığını kontrol et
+            
             if (txtkptnno.Text.Length != 4)
             {
                 MessageBox.Show("Kaptan numarası 4 haneli olmalıdır.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // Kaptan numarasının daha önce kullanılıp kullanılmadığını kontrol et
+            
             if (KaptanNoVarMi(txtkptnno.Text))
             {
                 MessageBox.Show("Bu kaptan numarası zaten kullanılmış.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return; // Kaptan numarası varsa işlemi sonlandır
+                return; 
             }
 
-            // Kaptan adının daha önce kullanılıp kullanılmadığını kontrol et
+            
             if (KaptanAdVarMi(txtkptnad.Text))
             {
                 MessageBox.Show("Bu kaptan adı zaten kullanılmış.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return; // Kaptan adı varsa işlemi sonlandır
+                return; 
             }
 
             using (SqlConnection baglanti = new SqlConnection(@"Data Source = EREN\SQLEXPRESS; Initial Catalog = Yolcu_bilet; Integrated Security = True"))
@@ -135,7 +135,7 @@ namespace Bilet_uygulama
 
                 MessageBox.Show("Kaptan Bilgisi Sisteme Kaydedildi", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Alanları temizle
+                
                 txtkptnad.Text = "";
                 mskkptntel.Text = "";
                 txtkptnno.Text = "";
@@ -159,11 +159,24 @@ namespace Bilet_uygulama
            
         }
 
+        private void dataGridView2_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridView2.SelectedRows.Count > 0)
+            {
+                DataGridViewRow selectedRow = dataGridView2.SelectedRows[0];
+
+                
+                string secilenKaptanNo = selectedRow.Cells["kaptan_no"].Value.ToString();
+
+                
+            }
+        }
+
         private void InitializeTimer()
         {
-            // Timer'ı başlat
+            
             timer1 = new Timer();
-            timer1.Interval = 1000; // Her bir saniyede bir (1000 milisaniye)
+            timer1.Interval = 3000; 
             timer1.Tick += new EventHandler(timer1_Tick);
             timer1.Start();
         }
@@ -180,45 +193,39 @@ namespace Bilet_uygulama
             {
                 DataGridViewRow selectedRow = dataGridView2.SelectedRows[0];
 
-                if (selectedRow.Index >= 0 && selectedRow.Index < dataGridView2.Rows.Count)
+                
+                string secilenKaptanNo = selectedRow.Cells["kaptan_no"].Value.ToString();
+
+                DialogResult result = MessageBox.Show("Seçili kaptanı silmek istediğinize emin misiniz?", "Kaptan Silme", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
                 {
-                    string secilenKaptanNo = selectedRow.Cells["kaptan_no"].Value.ToString();
-
-                    DialogResult result = MessageBox.Show("Seçili kaptanı silmek istediğinize emin misiniz?", "Kaptan Silme", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                    if (result == DialogResult.Yes)
+                    
+                    using (SqlConnection baglanti = new SqlConnection(@"Data Source=EREN\SQLEXPRESS;Initial Catalog=Yolcu_bilet;Integrated Security=True"))
                     {
-                        // Seçilen kaptanı veritabanından sil
-                        using (SqlConnection baglanti = new SqlConnection(@"Data Source=EREN\SQLEXPRESS;Initial Catalog=Yolcu_bilet;Integrated Security=True"))
+                        baglanti.Open();
+
+                        SqlCommand kaptanSilKomutu = new SqlCommand("DELETE FROM kaptan_bilgi WHERE kaptan_no = @kaptanNo", baglanti);
+                        kaptanSilKomutu.Parameters.AddWithValue("@kaptanNo", secilenKaptanNo);
+
+                        int affectedRows = kaptanSilKomutu.ExecuteNonQuery();
+
+                        if (affectedRows > 0)
                         {
-                            baglanti.Open();
+                            MessageBox.Show("Kaptan başarıyla silindi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                            SqlCommand kaptanSilKomutu = new SqlCommand("DELETE FROM kaptan_bilgi WHERE kaptan_no = @kaptanNo", baglanti);
-                            kaptanSilKomutu.Parameters.AddWithValue("@kaptanNo", secilenKaptanNo);
+                            
+                            kaptanlistesi();
 
-                            int affectedRows = kaptanSilKomutu.ExecuteNonQuery();
-
-                            if (affectedRows > 0)
-                            {
-                                MessageBox.Show("Kaptan başarıyla silindi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                                // DataGridView'i güncelle
-                                kaptanlistesi();
-
-                                txtkptnad.Text = "";
-                                mskkptntel.Text = "";
-                                txtkptnno.Text = "";
-                            }
-                            else
-                            {
-                                MessageBox.Show("Kaptan silinirken bir hata oluştu. Silinen satır sayısı: 0", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
+                            txtkptnad.Text = "";
+                            mskkptntel.Text = "";
+                            txtkptnno.Text = "";
+                        }
+                        else
+                        {
+                            MessageBox.Show("Kaptan silinirken bir hata oluştu. Silinen satır sayısı: 0", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
-                }
-                else
-                {
-                    MessageBox.Show("Seçilen satır DataGridView2'ye ait değil.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else

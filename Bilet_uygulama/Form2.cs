@@ -17,50 +17,50 @@ namespace Bilet_uygulama
         {
             InitializeComponent();
 
-            // Timer'ı başlat
+            
             Timer timer = new Timer();
-            timer.Interval = 60000; // Her bir dakikada bir (1 dakika = 60000 milisaniye)
+            timer.Interval = 60000; 
             timer.Tick += new EventHandler(timer_Tick);
             timer.Start();
 
-            // Sefer listesini yükle
+            
             seferlistesi();
         }
         private void timer_Tick(object sender, EventArgs e)
         {
-            // Güncel saat ve tarih bilgisini al
+            
             DateTime currentDateTime = DateTime.Now;
 
-            // Bağlantı kapalıysa aç
+            
             if (baglanti.State == ConnectionState.Closed)
                 baglanti.Open();
 
-            // Sefer bilgilerini al
+            
             SqlDataAdapter seferAdapter = new SqlDataAdapter("SELECT sefer_no, sefer_kalkis, sefer_varis, sefer_tarih, sefer_saat, sefer_fiyat FROM sefer_bilgileri", baglanti);
             DataTable seferTable = new DataTable();
             seferAdapter.Fill(seferTable);
 
-            // Her bir seferi kontrol et
+            
             foreach (DataRow row in seferTable.Rows)
             {
                 DateTime seferDateTime = Convert.ToDateTime(row["sefer_tarih"].ToString() + " " + row["sefer_saat"].ToString());
 
-                // Eğer seferin zamanı geçmişse, seferi sil
+                
                 if (seferDateTime <= currentDateTime)
                 {
                     int seferNo = Convert.ToInt32(row["sefer_no"].ToString());
 
-                    // Seferi silme işlemi burada yapılır, örnek olarak
+                    
                     SqlCommand deleteCommand = new SqlCommand("DELETE FROM sefer_bilgileri WHERE sefer_no = @seferNo", baglanti);
                     deleteCommand.Parameters.AddWithValue("@seferNo", seferNo);
                     deleteCommand.ExecuteNonQuery();
                 }
             }
 
-            // Bağlantıyı kapat
+            
             baglanti.Close();
 
-            // Sefer listesini güncelle
+            
             seferlistesi();
             koltukRenklendir();
         }
@@ -76,12 +76,12 @@ namespace Bilet_uygulama
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            // Form yüklendiğinde seçenekleri temizleyip ekleyin
+            
             cmbkydlcins.Items.Clear();
             cmbkydlcins.Items.Add("Kadın");
             cmbkydlcins.Items.Add("Erkek");
 
-            seferlistesi(); // Diğer işlemleri gerçekleştirmek için
+            seferlistesi(); 
         }
 
         private void cmbkydlcins_SelectedIndexChanged(object sender, EventArgs e)
@@ -106,18 +106,18 @@ namespace Bilet_uygulama
         {
             try
             {
-                // Gerekli alanların dolu olup olmadığını kontrol et
+                
                 if (string.IsNullOrEmpty(txtkydlad.Text) || string.IsNullOrEmpty(txtkydlsyad.Text) ||
                     string.IsNullOrEmpty(mskkydltel.Text) || string.IsNullOrEmpty(mskkydltc.Text) ||
                     string.IsNullOrEmpty(cmbkydlcins.Text) || string.IsNullOrEmpty(txtkydlmail.Text))
                 {
                     MessageBox.Show("Lütfen tüm alanları doldurunuz!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return; // Eğer alanlar eksikse kayıt işlemine devam etme
+                    return; 
                 }
 
                 baglanti.Open();
 
-                // Kullanıcı bilgilerinin benzersiz olup olmadığını kontrol etmek için bir sorgu yazalım
+                
                 SqlCommand kontrolSorgu = new SqlCommand("SELECT COUNT(*) FROM Yolcu_bilgiler WHERE yolcu_tc = @tc", baglanti);
                 kontrolSorgu.Parameters.AddWithValue("@tc", mskkydltc.Text);
 
@@ -125,12 +125,12 @@ namespace Bilet_uygulama
 
                 if (kayitSayisi > 0)
                 {
-                    // Aynı TC kimlik numarasına sahip bir kullanıcı zaten varsa hata mesajı göster
+                    
                     MessageBox.Show("Bu TC Kimlik Numarasına sahip bir kullanıcı zaten kayıtlı!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
-                    // Yeni kullanıcıyı ekleyelim
+                    
                     SqlCommand bilgiyolcu = new SqlCommand("INSERT INTO Yolcu_bilgiler (yolcu_ad, yolcu_soyad, yolcu_tel, yolcu_tc, yolcu_cins, yolcu_mail) VALUES (@p1, @p2, @p3, @p4, @p5, @p6)", baglanti);
                     bilgiyolcu.Parameters.AddWithValue("@p1", txtkydlad.Text);
                     bilgiyolcu.Parameters.AddWithValue("@p2", txtkydlsyad.Text);
@@ -151,7 +151,7 @@ namespace Bilet_uygulama
             finally
             {
                 baglanti.Close();
-                // Diğer temizleme işlemleri burada yapılabilir.
+                
                 txtkydlad.Text = "";
                 txtkydlsyad.Text = "";
                 mskkydltel.Text = "";
@@ -175,14 +175,14 @@ namespace Bilet_uygulama
             {
                 baglanti.Open();
 
-                // TC kimlik numarasının formata uygunluğunu kontrol et
+                
                 if (!IsValidTc(mskreztc.Text))
                 {
                     MessageBox.Show("Geçerli bir TC Kimlik Numarası giriniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                // TC kimlik numarasının sistemde kayıtlı olup olmadığını kontrol et
+                
                 SqlCommand kontrolSorgu = new SqlCommand("SELECT COUNT(*) FROM Yolcu_bilgiler WHERE yolcu_tc = @tc", baglanti);
                 kontrolSorgu.Parameters.AddWithValue("@tc", mskreztc.Text);
 
@@ -190,9 +190,9 @@ namespace Bilet_uygulama
 
                 if (kayitSayisi > 0)
                 {
-                    // TC kimlik numarasına sahip yolcu varsa rezervasyonu yap
+                    
 
-                    // PNR kodunu oluştur
+                    
                     string pnrKodu = GeneratePNRCode();
 
                     // İlgili sefer ve koltuk için rezervasyon yapıldığını kontrol et
@@ -251,11 +251,10 @@ namespace Bilet_uygulama
 
 
 
-        // TC Kimlik Numarası formatının geçerli olup olmadığını kontrol etmek için bir metod
+        
         private bool IsValidTc(string tc)
         {
-            // TC kimlik numarasının geçerli olup olmadığını kontrol etmek için gerekli kontrolleri burada gerçekleştirin
-            // Örnek olarak, TC kimlik numarasının uzunluğunu kontrol edebilirsiniz
+            
             return tc.Length == 11;
         }
 
@@ -269,39 +268,39 @@ namespace Bilet_uygulama
         }
         private void koltukRenklendir()
         {
-            // Bağlantı açık değilse aç
+            
             if (baglanti.State == ConnectionState.Closed)
                 baglanti.Open();
 
-            // Tüm koltuk butonlarını al
+            
             Button[] koltukButtons = { button1, button2, button3, button4, button5, button6, button7, button8, button9, button10, button11, button12, button13, button14, button15 };
 
             foreach (Button button in koltukButtons)
             {
-                // Koltuk numarasını al
+                
                 string koltukNo = button.Text;
 
-                // Sefer ve koltuk durumunu kontrol et
+                
                 SqlCommand durumSorgu = new SqlCommand("SELECT durum FROM koltuk_durumu WHERE sefer_no = @seferNo AND koltuk_no = @koltukNo", baglanti);
                 durumSorgu.Parameters.AddWithValue("@seferNo", txtrezno.Text);
                 durumSorgu.Parameters.AddWithValue("@koltukNo", koltukNo);
 
                 int durum = Convert.ToInt32(durumSorgu.ExecuteScalar());
 
-                // Duruma göre renklendirme yap
+                
                 if (durum == 1)
                 {
-                    // Dolu koltuk
+                    
                     button.BackColor = Color.Blue;
                 }
                 else
                 {
-                    // Boş koltuk
+                    
                     button.BackColor = Color.Silver;
                 }
             }
 
-            // Bağlantıyı kapat
+            
             baglanti.Close();
         }
 
@@ -310,7 +309,7 @@ namespace Bilet_uygulama
         {
             txtrezkoltuk.Text = "1";
 
-            // Butonun rengini kontrol et
+            
             if (button1.BackColor == Color.Red)
             {
                 button1.BackColor = Color.Silver;
@@ -327,7 +326,7 @@ namespace Bilet_uygulama
         {
             txtrezkoltuk.Text = "2";
 
-            // Butonun rengini kontrol et
+            
             if (button2.BackColor == Color.Red)
             {
                 button2.BackColor = Color.Silver;
@@ -346,7 +345,7 @@ namespace Bilet_uygulama
         {
             txtrezkoltuk.Text = "3";
 
-            // Butonun rengini kontrol et
+            
             if (button3.BackColor == Color.Red)
             {
                 button3.BackColor = Color.Silver;
@@ -362,7 +361,7 @@ namespace Bilet_uygulama
         {
             txtrezkoltuk.Text = "4";
 
-            // Butonun rengini kontrol et
+            
             if (button4.BackColor == Color.Red)
             {
                 button4.BackColor = Color.Silver;
@@ -378,7 +377,7 @@ namespace Bilet_uygulama
         {
             txtrezkoltuk.Text = "5";
 
-            // Butonun rengini kontrol et
+            
             if (button5.BackColor == Color.Red)
             {
                 button5.BackColor = Color.Silver;
@@ -394,7 +393,7 @@ namespace Bilet_uygulama
         {
             txtrezkoltuk.Text = "6";
 
-            // Butonun rengini kontrol et
+            
             if (button6.BackColor == Color.Red)
             {
                 button6.BackColor = Color.Silver;
@@ -410,7 +409,7 @@ namespace Bilet_uygulama
         {
             txtrezkoltuk.Text = "7";
 
-            // Butonun rengini kontrol et
+            
             if (button7.BackColor == Color.Red)
             {
                 button7.BackColor = Color.Silver;
@@ -428,7 +427,7 @@ namespace Bilet_uygulama
         {
             txtrezkoltuk.Text = "8";
 
-            // Butonun rengini kontrol et
+            
             if (button8.BackColor == Color.Red)
             {
                 button8.BackColor = Color.Silver;
@@ -444,7 +443,7 @@ namespace Bilet_uygulama
         {
             txtrezkoltuk.Text = "9";
 
-            // Butonun rengini kontrol et
+            
             if (button9.BackColor == Color.Red)
             {
                 button9.BackColor = Color.Silver;
@@ -460,7 +459,7 @@ namespace Bilet_uygulama
         {
             txtrezkoltuk.Text = "10";
 
-            // Butonun rengini kontrol et
+            
             if (button10.BackColor == Color.Red)
             {
                 button10.BackColor = Color.Silver;
@@ -476,7 +475,7 @@ namespace Bilet_uygulama
         {
             txtrezkoltuk.Text = "11";
 
-            // Butonun rengini kontrol et
+            
             if (button11.BackColor == Color.Red)
             {
                 button11.BackColor = Color.Silver;
@@ -492,7 +491,7 @@ namespace Bilet_uygulama
         {
             txtrezkoltuk.Text = "12";
 
-            // Butonun rengini kontrol et
+            
             if (button12.BackColor == Color.Red)
             {
                 button12.BackColor = Color.Silver;
@@ -508,7 +507,7 @@ namespace Bilet_uygulama
         {
             txtrezkoltuk.Text = "13";
 
-            // Butonun rengini kontrol et
+            
             if (button13.BackColor == Color.Red)
             {
                 button13.BackColor = Color.Silver;
@@ -524,7 +523,6 @@ namespace Bilet_uygulama
         {
             txtrezkoltuk.Text = "14";
 
-            // Butonun rengini kontrol et
             if (button14.BackColor == Color.Red)
             {
                 button14.BackColor = Color.Silver;
@@ -540,7 +538,7 @@ namespace Bilet_uygulama
         {
             txtrezkoltuk.Text = "15";
 
-            // Butonun rengini kontrol et
+            
             if (button15.BackColor == Color.Red)
             {
                 button15.BackColor = Color.Silver;
